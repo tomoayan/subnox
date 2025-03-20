@@ -2,7 +2,7 @@
 export default function myVitePlugin() {
     let config;
     const compRegex = /components\/.*\.html$/g; // match files only for components folder
-    const extractHtmlElRegex = /<(script|html|style)>([\s\S]*?)<\/(\1)>/g; // match script, html, style element/tags and it's inside codes
+    const extractHtmlElRegex = /<(.*)>([\s\S]*?)<\/(\1)>/g; // match script, html, style element/tags and it's inside codes
     const elTagCodeRegex = /^(\<(?<tag>.*?)\>)(?<code>[\s\S]*?)(\<\/\2>)/g; // Extract element tag (script, style or html) and inside codes
 
 
@@ -18,7 +18,7 @@ export default function myVitePlugin() {
                     .reduce((acc, currVal) => {
                         const element = Array.from(currVal.matchAll(elTagCodeRegex))[0];
                         if (!['script', 'html', 'style'].includes(element.groups.tag)) {
-                            console.log(`unknown tag: ${element.groups.tag} in the file '${id}'`) // TODO: add red color for this console.log
+                            console.log(`\x1b[48;5;215m\x1b[38;5;9m unknown tag:\x1b[0m\x1b[38;5;229m ${element.groups.tag}\x1b[0m in the file '${id}' \x1b[0m`) // TODO: add red color for this console.log
                             return acc
                         }
 
